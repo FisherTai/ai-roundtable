@@ -1,0 +1,33 @@
+# --- 1. Python 基本垃圾 ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- 2. 虛擬環境 (絕對不能上傳) ---
+venv/
+env/
+.venv/
+
+# --- 3. macOS 系統垃圾 ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# --- 4. 敏感資料與環境變數 (資安關鍵！) ---
+.env
+.secrets
+*.key
+secrets.toml
+
+# --- 5. Streamlit 特定 ---
+# Streamlit 的機密設定檔通常放在這裡
+.streamlit/secrets.toml
+
+# --- 6. AutoGen 特定 ---
+# AutoGen 會產生快取來省錢，不需要上傳
+.cache/
+# 如果你有開啟程式碼執行，這是預設產出的資料夾
+coding/
+
+# --- 7. IDE 設定 (VS Code) ---
+.vscode/

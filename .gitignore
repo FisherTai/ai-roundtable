@@ -31,3 +31,5 @@ coding/
 
 # --- 7. IDE 設定 (VS Code) ---
 .vscode/
+
+.idea/

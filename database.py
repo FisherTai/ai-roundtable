@@ -38,6 +38,17 @@ class DatabaseManager:
                     FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
                 )
             """)
+            # Custom Roles table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS custom_roles (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    description TEXT,
+                    avatar TEXT,
+                    source_type TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
             conn.commit()
 
     def create_session(self, title, agents=None):
@@ -82,4 +93,28 @@ class DatabaseManager:
             cursor = conn.cursor()
             cursor.execute("PRAGMA foreign_keys = ON")
             cursor.execute("DELETE FROM sessions WHERE id = ?", (session_id,))
+            conn.commit()
+
+    # Custom Roles CRUD methods
+    def add_custom_role(self, name, description, avatar, source_type="manual"):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO custom_roles (name, description, avatar, source_type)
+                VALUES (?, ?, ?, ?)
+            """, (name, description, avatar, source_type))
+            conn.commit()
+            return cursor.lastrowid
+
+    def get_custom_roles(self):
+        with self._get_connection() as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM custom_roles ORDER BY created_at DESC")
+            return [dict(row) for row in cursor.fetchall()]
+
+    def delete_custom_role(self, role_id):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM custom_roles WHERE id = ?", (role_id,))
             conn.commit()

@@ -33,3 +33,5 @@ coding/
 .vscode/
 
 .idea/
+# Local runtime database
+history.db

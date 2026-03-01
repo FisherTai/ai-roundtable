@@ -1,4 +1,4 @@
 streamlit
-ag2>=0.4
+ag2[openai]>=0.4
 python-dotenv
 Pillow
